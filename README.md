@@ -14,9 +14,25 @@ A real‑time object detection system with a sci‑fi inspired Heads‑Up Displa
 
 ---
 
-## 📸 Demo
+## 🛠️ Installation
 
-Add your demo GIF or screenshot here:
+```bash
+git clone https://github.com/arudzheri/Realtime-Object-Detection-HUD.git
+cd Realtime-Object-Detection-HUD
+pip install -r requirements.txt
 
-```md
-![HUD Demo](hud_overlay.png)
+---
+
+## ▶️ Usage
+python hud_app.py
+
+streamlit run streamlit_app.py
+
+---
+
+## 🧠 Tech stack
+. Python
+. OpenCV
+. YOLO (v3 / v5 / v8)
+. Streamlit (optional)
+. NumPy, time, argparse
