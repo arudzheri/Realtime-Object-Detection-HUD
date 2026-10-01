@@ -1,55 +1,22 @@
 # 🎯 Realtime Object Detection HUD
-A real-time object detection system with a Heads-Up Display (HUD) inspired by sci-fi interfaces like Iron Man’s helmet view. This Python application uses YOLO and OpenCV to detect objects via webcam and overlays a futuristic HUD for enhanced visualization.
 
-🚀 Features
-Real-time webcam-based object detection
+A real‑time object detection system with a sci‑fi inspired Heads‑Up Display (HUD), similar to Iron Man’s helmet view. Using **YOLO**, **OpenCV**, and Python, it detects objects from a live webcam feed and overlays a dynamic HUD with crosshairs, labels, and detection stats.
 
-Integration with YOLO (You Only Look Once) for accurate, fast detection
+---
 
-Futuristic HUD UI with bounding boxes and labels
+## 🚀 Features
 
-Customizable display overlays (crosshair, frame rate, detection stats)
+- **Real‑time detection** with YOLO models  
+- **HUD‑style overlay**: crosshair, bounding boxes, labels, FPS counter  
+- **Python + OpenCV implementation**  
+- **Optional Streamlit UI** for a cleaner, interactive interface  
+- **Customizable overlays** for different use‑cases (monitoring, demos, experiments)
 
-Optional: Streamlit/Flask interface for deployment
+---
 
-📸 Demo
+## 📸 Demo
 
-🛠️ Installation
-Clone the repo
+Add your demo GIF or screenshot here:
 
-bash
-Copy
-Edit
-git clone https://github.com/arudzheri/Realtime-Object-Detection-HUD.git
-cd Realtime-Object-Detection-HUD
-Install dependencies
-
-bash
-Copy
-Edit
-pip install -r requirements.txt
-
-Download YOLO weights
-
-Download pretrained YOLOv3 weights from YOLO official site or use OpenCV's built-in YOLO models.
-
-Place them in the yolo/ directory.
-
-Run the app
-
-bash
-Copy
-Edit
-python detect.py
-(Or launch streamlit_app.py / app.py if using a Streamlit/Flask UI)
-
-🧠 Technologies Used
-Python
-
-OpenCV
-
-YOLO (v3 or v5)
-
-Streamlit or Flask (optional GUI)
-
-NumPy, time, argparse, etc.
+```md
+![HUD Demo](hud_overlay.png)
