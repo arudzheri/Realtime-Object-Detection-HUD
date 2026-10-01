@@ -14,7 +14,31 @@ def resolve_asset(filename: str) -> str:
         candidate = asset_dir / filename
         if candidate.exists():
             return str(candidate)
-    raise FileNotFoundError(f"Asset '{filename}' was not found in {ASSET_DIRS}")
+    return ""
+
+
+def validate_runtime_environment():
+    required_assets = ["hud_overlay.png", "target_icon.png", "Orbitron-Regular.ttf"]
+    missing_assets = [name for name in required_assets if not resolve_asset(name)]
+    if missing_assets:
+        raise FileNotFoundError(
+            "Missing required HUD assets: " + ", ".join(missing_assets)
+            + ". Put them in the project root or an assets/ folder."
+        )
+
+    camera = cv2.VideoCapture(0)
+    if not camera.isOpened():
+        raise RuntimeError(
+            "Could not open webcam. Please connect a camera and ensure your OS allows access to it."
+        )
+    camera.release()
+
+    try:
+        YOLO("yolov8n.pt")
+    except Exception as exc:
+        raise RuntimeError(
+            "YOLO model could not be initialized. Ensure ultralytics can download yolov8n.pt and you have internet access."
+        ) from exc
 
 
 @st.cache_resource
@@ -50,7 +74,12 @@ def main():
 
     col1, col2 = st.columns(2)
     if col1.button("Start webcam"):
-        st.session_state.running = True
+        try:
+            validate_runtime_environment()
+            st.session_state.running = True
+        except Exception as exc:
+            st.error(f"Runtime check failed: {exc}")
+            st.session_state.running = False
     if col2.button("Stop webcam"):
         st.session_state.running = False
 

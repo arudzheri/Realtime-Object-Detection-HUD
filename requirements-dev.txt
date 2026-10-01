@@ -1,0 +1,5 @@
+# Optional development tools for contributors
+black>=24.0.0
+flake8>=7.0.0
+pytest>=8.0.0
+ruff>=0.6.0

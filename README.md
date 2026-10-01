@@ -1,45 +1,97 @@
-# 🎯 Realtime Object Detection HUD
+# Realtime Object Detection HUD
 
-A real-time object detection system with a sci-fi inspired Heads-Up Display (HUD), similar to Iron Man's helmet view. Using YOLO, OpenCV, and Python, it detects objects from a live camera feed and overlays HUD information in real time.
+A real-time object detection system with a sci-fi inspired Heads-Up Display (HUD), similar to Iron Man's helmet view. It uses YOLO, OpenCV, and Python to detect objects from a live camera feed and overlay HUD-style information.
 
 ---
 
-## 🚀 Features
+## Features
 
 - Real-time detection with YOLO models
 - HUD-style overlay: crosshair, bounding boxes, labels, FPS counter
 - Python + OpenCV implementation
-- Optional Streamlit UI for a cleaner interactive interface
+- Optional Streamlit UI for an interactive browser-based display
 - Customizable overlays for different use-cases
 
 ---
 
-## 🛠️ Installation
+## Requirements
+
+Before installing, make sure you have:
+
+- Python 3.9+ recommended
+- A working webcam connected to your machine
+- A desktop display or GUI environment available for the OpenCV HUD
+- Internet access for the first YOLO model download (`yolov8n.pt`)
+
+---
+
+## Local setup
+
+### 1) Clone the repository
 
 ```bash
 git clone https://github.com/arudzheri/Realtime-Object-Detection-HUD.git
 cd Realtime-Object-Detection-HUD
-python -m venv .venv
+```
+
+### 2) Create and activate a virtual environment
+
+On macOS/Linux:
+
+```bash
+python3 -m venv .venv
 source .venv/bin/activate
-# On Windows: .venv\Scripts\activate
+```
+
+On Windows (PowerShell):
+
+```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+```
+
+On Windows (Command Prompt):
+
+```cmd
+python -m venv .venv
+.venv\Scripts\activate.bat
+```
+
+### 3) Install dependencies
+
+```bash
 pip install -r requirements.txt
 ```
 
-The project automatically looks for required assets in either the project root or an `assets/` directory, so it works without manual relocation.
+Optional developer tools:
+
+```bash
+pip install -r requirements-dev.txt
+```
+
+### 4) Confirm required assets are present
+
+The project expects these files to exist in the project root or in an `assets/` directory:
+
+- `hud_overlay.png`
+- `target_icon.png`
+- `Orbitron-Regular.ttf`
+
+If any are missing, the app will stop early with a clear error message explaining what is missing.
 
 ---
 
-## ▶️ Usage
+## Run the project
 
-### Desktop OpenCV HUD
+### OpenCV desktop HUD
 
 ```bash
 python hud_app.py
 ```
 
-Press `q` to quit the window.
+Press `q` to quit.
 
-### Streamlit version
+### Streamlit UI
 
 ```bash
 streamlit run streamlit_app.py
@@ -47,7 +99,30 @@ streamlit run streamlit_app.py
 
 ---
 
-## 🧠 Tech stack
+## Startup checks and troubleshooting
+
+The app now validates the environment before launching the camera feed. Common startup issues and fixes:
+
+- Webcam not detected:
+  - confirm the device is connected
+  - check OS camera permissions
+  - try a different camera index if needed (for example `cv2.VideoCapture(1)` in code)
+
+- Missing assets:
+  - make sure `hud_overlay.png`, `target_icon.png`, and `Orbitron-Regular.ttf` are in the project root or `assets/`
+
+- YOLO model download fails:
+  - check internet access
+  - ensure `ultralytics` can download `yolov8n.pt`
+  - try reinstalling dependencies with `pip install -r requirements.txt`
+
+- Audio engine issue:
+  - the sound feedback is optional
+  - if `pyttsx3` fails to initialize, the app continues without voice output
+
+---
+
+## Tech stack
 
 - Python
 - OpenCV
@@ -60,5 +135,5 @@ streamlit run streamlit_app.py
 ## Notes
 
 - A webcam is required for live detection.
-- If your system cannot access the camera, make sure the device is connected and available to Python.
-- The app expects the YOLO weights file `yolov8n.pt` to be present in the project folder.
+- The app expects the YOLO weights file `yolov8n.pt` to be available.
+- The desktop app requires a GUI-enabled machine with a display.

@@ -16,7 +16,31 @@ def resolve_asset(filename: str) -> str:
         candidate = asset_dir / filename
         if candidate.exists():
             return str(candidate)
-    raise FileNotFoundError(f"Asset '{filename}' was not found in {ASSET_DIRS}")
+    return ""
+
+
+def validate_runtime_environment() -> None:
+    required_assets = ["hud_overlay.png", "target_icon.png", "Orbitron-Regular.ttf"]
+    missing_assets = [name for name in required_assets if not resolve_asset(name)]
+    if missing_assets:
+        raise FileNotFoundError(
+            "Missing required HUD assets: " + ", ".join(missing_assets)
+            + ". Put them in the project root or an assets/ folder."
+        )
+
+    camera = cv2.VideoCapture(0)
+    if not camera.isOpened():
+        raise RuntimeError(
+            "Could not open webcam. Please connect a camera and ensure your OS allows access to it."
+        )
+    camera.release()
+
+    try:
+        YOLO("yolov8n.pt")
+    except Exception as exc:
+        raise RuntimeError(
+            "YOLO model could not be initialized. Ensure ultralytics can download yolov8n.pt and you have internet access."
+        ) from exc
 
 
 def overlay_image_alpha(img, img_overlay, pos, alpha_mask):
@@ -30,7 +54,10 @@ def overlay_image_alpha(img, img_overlay, pos, alpha_mask):
         alpha_mask = cv2.resize(alpha_mask, (w, h), interpolation=cv2.INTER_LINEAR)
 
     slice_img = img[y:y + h, x:x + w]
-    blend = slice_img.astype(np.float32) * (1.0 - alpha_mask[:, :, None]) + img_overlay[:, :, :3].astype(np.float32) * alpha_mask[:, :, None]
+    blend = (
+        slice_img.astype(np.float32) * (1.0 - alpha_mask[:, :, None])
+        + img_overlay[:, :, :3].astype(np.float32) * alpha_mask[:, :, None]
+    )
     slice_img[:] = blend.astype(np.uint8)
 
 
@@ -44,6 +71,11 @@ def load_png_asset(path: str):
 
 
 def main():
+    try:
+        validate_runtime_environment()
+    except Exception as exc:
+        raise RuntimeError(f"Startup validation failed: {exc}") from exc
+
     engine = None
     try:
         engine = pyttsx3.init()
