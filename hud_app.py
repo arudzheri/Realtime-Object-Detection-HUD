@@ -21,8 +21,8 @@ def resolve_asset(filename: str) -> str:
 def overlay_image_alpha(img, img_overlay, pos, alpha_mask):
     x, y = pos
     h, w = img_overlay.shape[:2]
-
-    # Slice the overlay into the background
+    if y + h > img.shape[0] or x + w > img.shape[1]:
+        return
     slice_img = img[y:y + h, x:x + w]
     slice_img[:] = (slice_img * (1 - alpha_mask) + img_overlay[:, :, :3] * alpha_mask).astype(np.uint8)
 
