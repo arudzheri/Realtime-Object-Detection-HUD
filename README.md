@@ -137,3 +137,8 @@ The app now validates the environment before launching the camera feed. Common s
 - A webcam is required for live detection.
 - The app expects the YOLO weights file `yolov8n.pt` to be available.
 - The desktop app requires a GUI-enabled machine with a display.
+
+---
+
+## Credits
+Object detection uses the pre-trained YOLOv8n model from Ultralytics (https://github.com/ultralytics/ultralytics).
